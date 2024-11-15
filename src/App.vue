@@ -1,35 +1,43 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import NavBar from './components/NavBar.vue';
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
+    <NavBar />
   </header>
-
-  <RouterView />
+  <div class="container">
+    <RouterView />
+  </div>
 </template>
+
+<script>
+  export default {
+    name: 'App'
+  }
+</script>
 
 <style scoped>
 header {
   line-height: 1.5;
   max-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .logo {
   display: block;
   margin: 0 auto 2rem;
 }
+.form{
+    position: relative;
+    width: 50%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+  }
 
 nav {
   width: 100%;
@@ -60,7 +68,6 @@ nav a:first-of-type {
   header {
     display: flex;
     place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
   }
 
   .logo {

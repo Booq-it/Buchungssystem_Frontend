@@ -1,9 +1,19 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+import NavBar from '../components/NavBar.vue';
+import TheWelcome from '../components/NavBar.vue'
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <p>Test</p>
   </main>
 </template>
+<script>
+  
+  export default {
+    name: 'HomeView',
+    components: {
+      
+    }
+  }
+  </script>
