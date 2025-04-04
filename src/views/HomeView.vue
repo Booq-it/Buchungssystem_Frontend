@@ -21,7 +21,7 @@ import TheWelcome from '../components/NavBar.vue';
     <p>120 Minutes</p>
   </template>
   <template #description>
-    <p>This is a short description of the movie. This Movie is very great. A very very great movie to watch. I really recommend watching this great great Movie.</p>
+    <p>This is a short description of the movie. This Movie is very great. A very very great movie to watch. I really recommend watching this great great Movie. test</p>
   </template>
 </ListedMovie>
     <p> Hello World </p>
