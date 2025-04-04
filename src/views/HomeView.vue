@@ -1,24 +1,28 @@
 <script setup>
+import ListedMovie from '@/components/ListedMovie.vue';
 import NavBar from '../components/NavBar.vue';
 import TheWelcome from '../components/NavBar.vue'
 </script>
 
+
 <template>
   <main>
-    <div class="movie-overview">
-      <h1>Aktuelle Filme</h1>
-      <div class="movies">
-        <div class="movie-card" v-for="movie in movies" :key="movie.id">
-          <img :src="movie.poster" :alt="movie.title" class="movie-poster" />
-          <h2 class="movie-title">{{ movie.title }}</h2>
-          <p class="movie-description">{{ movie.description }}</p>
-          <button class="movie-details-button" >Details</button>
-        </div>
-      </div>
-    </div>
+<ListedMovie>
+  <template #poster>
+    <img src="https://placehold.co/600x400" alt="Movie Poster">
+  </template>
+  <template #Title>
+    <h3>Movie Title</h3>
+  </template>
+  <template #genre>
+    <p>Action</p>
+  </template>
+  <template #duration>
+    <p>120</p>
+  </template>
+</ListedMovie>
+    <p> Hello World </p>
 
-
-    
   </main>
 </template>
 <style scoped>
