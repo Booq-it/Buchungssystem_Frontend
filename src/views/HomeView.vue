@@ -1,7 +1,7 @@
 <script setup>
-import ListedMovie from '@/components/ListedMovie.vue';
+import ListedMovie from '../components/ListedMovie.vue';
 import NavBar from '../components/NavBar.vue';
-import TheWelcome from '../components/NavBar.vue'
+import TheWelcome from '../components/NavBar.vue';
 </script>
 
 
