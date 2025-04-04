@@ -34,6 +34,7 @@
   gap: 15px;
   border: 1px solid #ccc;
   padding: 15px;
+  width: 100%;
   border-radius: 8px;
   background: #4f4b4b;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
