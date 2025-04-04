@@ -6,7 +6,7 @@ import TheWelcome from '../components/NavBar.vue';
 
 
 <template>
-  <main>
+  <main> 
 <ListedMovie>
   <template #poster>
     <img src="https://placehold.co/600x400" alt="Movie Poster">
@@ -18,7 +18,10 @@ import TheWelcome from '../components/NavBar.vue';
     <p>Action</p>
   </template>
   <template #duration>
-    <p>120</p>
+    <p>120 Minutes</p>
+  </template>
+  <template #description>
+    <p>This is a short description of the movie. This Movie is very great. A very very great movie to watch. I really recommend watching this great great Movie.</p>
   </template>
 </ListedMovie>
     <p> Hello World </p>
