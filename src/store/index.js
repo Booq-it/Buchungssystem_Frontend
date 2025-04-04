@@ -9,10 +9,10 @@ const vuexLocal = new VuexPersistence({
 export default createStore({
     state: {
         m_FilmID: null,
-        m_Filmtitel: null,
-        m_Datum: null,
         m_Zeit: null,
         m_KinoID: null,
+        m_Filmname: null,
+        m_Datum: null,
         Kundendaten:{
             kundenId: null,
             Name: "Name",
@@ -22,20 +22,14 @@ export default createStore({
         }
     },
     mutations: {
-            setFilmName: (state, m_Filmtitel) =>{          
-                state.m_Filmtitel = m_Filmtitel
+            setFilmName: (state, m_Filmname) =>{          
+                state.m_Filmname = m_Filmname
             },
             setFilmID: (state, m_FilmID) =>{          
                 state.m_FilmID = m_FilmID
             },
             setDatum: (state, m_Datum) =>{
                 state.m_Datum = m_Datum
-            },
-            setZeit: (state, m_Zeit) => {
-                state.m_Zeit = m_Zeit;
-            },
-            setKinoID: (state, m_KinoID) => {
-                state.m_KinoID = m_KinoID;
             },
             setKundenDaten: (state, kundendaten)=>{
                 state.Kundendaten.kundenId = kundendaten.m_KundenId;
@@ -57,7 +51,7 @@ export default createStore({
                     return state.m_FilmID;
                 },
                 getFilmName(state){
-                    return state.m_Filmtitel;
+                    return state.m_Filmname;
                 },
                 getRolle(state){
                     return state.Kundendaten.Rolle;
