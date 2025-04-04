@@ -15,56 +15,7 @@ import TheWelcome from '../components/NavBar.vue';
 
   </main>
 </template>
-<style scoped>
-    .movie-overview {
-      text-align: center;
-      padding: 20px;
-    }
 
-    .movies {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    .movie-card {
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 10px;
-      width: 200px;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .movie-poster {
-      width: 100%;
-      border-radius: 8px;
-    }
-
-    .movie-title {
-      font-size: 18px;
-      margin: 10px 0;
-    }
-
-    .movie-description {
-      font-size: 14px;
-      color: #666;
-    }
-
-    .movie-details-button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .movie-details-button:hover {
-      background-color: #0056b3;
-    }
-    </style>
 <script>
 import axios from 'axios';
 import APIURLService from '@/services/API.service';
