@@ -1,13 +1,16 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import ListedMovie from '../components/ListedMovie.vue';
+import axios from 'axios';
+import APIURLService from '@/services/API.service';
 
 const movies = ref([]);
 
 onMounted(async () => {
     try {
-        const response = await axios.get('https://api.example.com/movies'); // Replace with real API endpoint
+        const response = await axios.get(APIURLService.getAPIUrl()+'/api/Showing'); 
         movies.value = response.data;
+        console.log(movies);
     } catch (error) {
         console.error('Error fetching movies:', error);
     }

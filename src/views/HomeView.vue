@@ -30,10 +30,11 @@ import APIURLService from '@/services/API.service';
         console.log(name)
         console.log("Test");
       },
-      async refresh(){
+      async getMovies(){
         axios.get(APIURLService.getAPIUrl()+'/api/Showing').then(
           (response)=>{
-            console.log(response.data);
+            movies = response.data;
+            console.log(movies);
           }
         )
       }
@@ -60,8 +61,6 @@ import APIURLService from '@/services/API.service';
 
         },
 
-    }, mounted:function(){
-      this.refresh();
     }
   }
 
