@@ -27,7 +27,7 @@ import TheWelcome from '../components/NavBar.vue';
         console.log(name)
         console.log("Test");
       },
-      async refresh(){
+      async getMovies(){
         axios.get(APIURLService.getAPIUrl()+'/api/Showing').then(
           (response)=>{
             movies = response.data;

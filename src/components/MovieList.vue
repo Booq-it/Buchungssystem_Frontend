@@ -4,6 +4,8 @@ import ListedMovie from '../components/ListedMovie.vue';
 import axios from 'axios';
 import APIURLService from '@/services/API.service';
 import FeaturedMovie from './FeaturedMovie.vue';
+import axios from 'axios';
+import APIURLService from '@/services/API.service';
 
 const movies = ref([]);
 
