@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import ListedMovie from '../components/ListedMovie.vue';
-import FeaturedMovie from './FeaturedMovie.vue';
+// import FeaturedMovie from './FeaturedMovie.vue';
+import FeaturedMovieList from './FeaturedMovieList.vue';
 
 const movies = ref([]);
 
@@ -52,7 +53,9 @@ movies.value = placeholderMovies;
 
 <template>
 
-    <FeaturedMovie v-if="movies.length" :movie="movies[0]">
+    <FeaturedMovieList></FeaturedMovieList>
+
+    <!-- <FeaturedMovie v-if="movies.length" :movie="movies[0]">
         <template #poster>
             <img :src="movies[0].posterUrl" :alt="movies[0].title + ' Poster'">
         </template>
@@ -71,9 +74,9 @@ movies.value = placeholderMovies;
             <p>{{ movies[0].description }}</p>
         </template>
 
-    </FeaturedMovie>
+    </FeaturedMovie> -->
 
-    <ListedMovie v-for="movie in movies.slice(1)" :key="movie.id">
+    <ListedMovie v-for="movie in movies.slice(0)" :key="movie.id">
         <template #poster>
             <img :src="movie.posterUrl" :alt="movie.title + ' Poster'">
         </template>

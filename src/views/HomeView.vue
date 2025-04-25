@@ -5,6 +5,7 @@ import MovieList from '../components/MovieList.vue';
 
 <template>
   <main> 
+
     <MovieList/>
     <p> Hello World </p>
 

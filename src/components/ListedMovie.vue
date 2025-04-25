@@ -40,7 +40,13 @@
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
   width: 100%; /* Make it take full width */
   margin: 20px auto; /* Center it horizontally */
+  transition: transform 0.3s ease-in-out;
 }
+
+.listed-movie:hover {
+    transform: scale(1.03);
+  }
+
 .poster img {
   width: 20px;
   height: 20px;
