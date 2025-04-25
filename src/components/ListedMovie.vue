@@ -41,6 +41,7 @@
   width: 100%; /* Make it take full width */
   margin: 20px auto; /* Center it horizontally */
   transition: transform 0.3s ease-in-out;
+  box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
 }
 
 .listed-movie:hover {

@@ -111,6 +111,12 @@ const prevMovie = () => {
   width: 100%;
   overflow: hidden;
   margin: 0 40px; 
+  transition: transform 0.3s ease-in-out;
+}
+
+.slider-container:hover{
+    transform: scale(1.05); /* Slightly larger on hover */
+    opacity: 1; /* Full opacity on hover */
 }
 
 .slider-track {
@@ -126,6 +132,8 @@ const prevMovie = () => {
   box-sizing: border-box;
   padding: 10px;
 }
+
+
 
 .slider-item.centered {
   opacity: 1; /* Full opacity for the centered item */
