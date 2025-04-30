@@ -10,7 +10,6 @@ import TheWelcome from '../components/NavBar.vue';
 <template>
   <main> 
     <MovieList/>
-    <p> Hello World </p>
 
   </main>
 </template>

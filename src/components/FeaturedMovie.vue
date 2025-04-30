@@ -16,14 +16,12 @@
         <p class="movie-description">
           <slot name="description">Exciting movie synopsis goes here...</slot>
         </p>
-        <div class="showtimes">
+        <!-- <div class="showtimes">
           <slot name="showtimes">
             <p>Showtimes not available</p>
           </slot>
-        </div>
-        <button class="buy-ticket">
-          <slot name="action">Get Tickets Now</slot>
-        </button>
+        </div> -->
+        <slot name="action">Get Tickets Now</slot>
       </div>
     </div>
   </template>
@@ -80,22 +78,5 @@
     margin-top: 15px;
   }
   
-  .buy-ticket {
-    margin-top: 15px;
-    padding: 12px 18px;
-    background-color: #ffcc00;
-    color: #000;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    transition: background 0.3s ease;
-  }
-  
-  .buy-ticket:hover {
-    background-color: #ffaa00;
-  }
   </style>
   

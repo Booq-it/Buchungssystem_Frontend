@@ -32,28 +32,39 @@
     data() {
     return{
       kunden_id: null,
-      email: "Test",
-      passwort: "test"
+      email: null,
+      passwort: null
     };
     },
     methods: {
       async onLogin(){
         // var res = await axios.post(APIURLService.getAPIUrl()+'/api/Login/LoginUser', {email: this.email,
-        //                                                                            passwort: this.passwort});
-        axios.post(APIURLService.getAPIUrl()+'/api/Login/LoginUser', {email: this.email,
-		password: this.passwort}).then(
+                                                                                  //  passwort: this.passwort});
+        axios.post(APIURLService.getAPIUrl()+'/api/Login/login', {email: this.email,
+		                                                              password: this.passwort}).then(
           (response)=>{
             console.log(response.data);
-			this.kunden_id = response.data.user_id;
-			if(this.kunden_id != "-1"){
-			  this.$store.commit('setKundenDaten', response.data);
-			  this.$router.push('/')
-			}else{
-			  //error Handling einfügen --> Nutzer ist nicht angemeldet
-			}
+			      if(response.data != -1){
+              this.$store.commit('setKundenDaten', response.data);
+              const rolle = this.$store.getters.getRolle;
+              console.log(rolle);
+              const kunden_id = this.$store.getters.getKundenId;
+              console.log(kunden_id);
+              this.$router.push('/')
+            }else{
+              //error Handling einfügen --> Nutzer ist nicht angemeldet
+              console.log("Email oder Passwort falsch");
+              alert("Email oder Passwort falsch");
+              this.$router.push('/login');
+            }
           }
         )
-    //   this.kunden_id = response.data.user_id;
+        
+        // axios.post(APIURLService.getAPIUrl()+'/api/User').then(
+        //   (response)=>{
+        //     console.log(response.data);
+        //   }
+        // )
   
       },
       onRegistrieren(){

@@ -21,9 +21,7 @@
           <p>Showtimes not available</p>
         </slot>
       </div>
-      <button class="buy-ticket">
-        <slot name="action">Buy Tickets</slot>
-      </button>
+      <!-- <slot name="action">Buy Tickets</slot> -->
     </div>
   </div>
 </template>
