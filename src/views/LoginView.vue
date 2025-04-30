@@ -18,8 +18,8 @@
   
   <script>
   // @ is an alias to /src
-  // import axios from 'axios'
-  // import APIURLService from '../services/API.service';
+  import axios from 'axios'
+  import APIURLService from '@/services/API.service';
   
   export default {
     name: 'LoginView',
@@ -38,17 +38,34 @@
     },
     methods: {
       async onLogin(){
-        var res = await axios.post(APIURLService.getAPIUrl()+'/api/Login/LoginKunde', {email: this.email,
-                                                                                   passwort: this.passwort});
+        // var res = await axios.post(APIURLService.getAPIUrl()+'/api/Login/LoginUser', {email: this.email,
+                                                                                  //  passwort: this.passwort});
+        axios.post(APIURLService.getAPIUrl()+'/api/Login/login', {email: this.email,
+		                                                              password: this.passwort}).then(
+          (response)=>{
+            console.log(response.data);
+			      if(response.data != -1){
+              this.$store.commit('setKundenDaten', response.data);
+              const rolle = this.$store.getters.getRolle;
+              console.log(rolle);
+              const kunden_id = this.$store.getters.getKundenId;
+              console.log(kunden_id);
+              this.$router.push('/')
+            }else{
+              //error Handling einfügen --> Nutzer ist nicht angemeldet
+              console.log("Email oder Passwort falsch");
+              alert("Email oder Passwort falsch");
+              this.$router.push('/login');
+            }
+          }
+        )
+        
+        // axios.post(APIURLService.getAPIUrl()+'/api/User').then(
+        //   (response)=>{
+        //     console.log(response.data);
+        //   }
+        // )
   
-      this.kunden_id = res.data;
-  
-      if(this.kunden_id != "-1"){
-        this.$store.commit('setKundenDaten', res.data);
-        this.$router.push('/suchen')
-      }else{
-        //error Handling einfügen --> Nutzer ist nicht angemeldet
-      }
       },
       onRegistrieren(){
         this.$router.push('/register')

@@ -9,19 +9,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/home">Home</a>
+              <a class="nav-link" aria-current="page" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/login">Login</a> <!-- v-if="this.$store.getters.getRolle == 2">Login</a> -->
+              <a class="nav-link" href="/login" v-if="this.$store.getters.getRolle == null">Login</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/register">Registrierung</a> <!-- v-if="this.$store.getters.getRolle == 2">Registrierung</a> -->
+              <a class="nav-link" href="/register" v-if="this.$store.getters.getRolle == null">Registrierung</a>
             </li>
           </ul>
-          <li class="nav-link"> <!-- v-if="this.$store.getters.getRolle != null">-->
+          <li class="nav-link" v-if="this.$store.getters.getRolle != null">
             <div class="dropdown">
               <a class="dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                <!-- <span>{{ this.$store.getters.getNameVorname }}</span> -->
+                <span>{{ this.$store.getters.getNameVorname }}</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                   class="bi bi-person-circle" viewBox="0 0 16 16">
                   <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -35,7 +35,7 @@
                   <a class="dropdown-item" aria-current="page" href="/">Buchungen</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="/home">Profil Bearbeiten</a>
+                  <a class="dropdown-item" href="/profile">Profil Bearbeiten</a>
                 </li>
                 <li>
                   <a class="dropdown-item" href="#" v-on:click.prevent="logOut()">Logout</a>
@@ -53,7 +53,7 @@
     name: "NavBar",
     methods: {
       logOut() {
-        //this.$store.commit('clearKundenDaten');
+        this.$store.commit('clearKundenDaten');
         // this redirects to the view with the name login
         this.$router.push({ name: "login" });
       }
@@ -83,7 +83,10 @@
   }
   
   nav a.router-link-exact-active {
-    color: #42b983;
+    color: #f1f1f1;
+  }
+  nav a:hover {
+    color: #5c5959;
   }
   
   .bg-custom,

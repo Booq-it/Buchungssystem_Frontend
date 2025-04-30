@@ -4,10 +4,10 @@
           <p class="h2">Registrierung</p>
           <div class="row mt-4 mb-4">
             <div class="col">
-            <input type="text" class="form-control" id="Name" placeholder="Name" v-model="Name">
+            <input type="text" class="form-control" id="Vorname" placeholder="Vorname" v-model="Vorname">
             </div>
             <div class="col">
-            <input type="text" class="form-control" id="Vorname" placeholder="Vorname" v-model="Vorname">
+            <input type="text" class="form-control" id="Nachname" placeholder="Nachname" v-model="Name">
             </div>
           </div>
           <div class="mb-4">
@@ -26,8 +26,8 @@
   
   <script>
   // @ is an alias to /src
-  //import axios from 'axios'
-  //import APIURLService from '../services/API.service';
+  import axios from 'axios'
+  import APIURLService from '../services/API.service';
 
   export default {
     name: 'RegisterView',
@@ -46,10 +46,10 @@
       this.$router.push('/login')
     },
     onRegistrieren(){
-      axios.post(APIURLService.getAPIUrl()+'/api/Login/RegisterKunde', {name: this.Name,
-                                                                                vorname: this.Vorname,
-                                                                                email: this.Email,
-                                                                                passwort: this.Passwort});
+      axios.post(APIURLService.getAPIUrl()+'/api/Login/register', { email: this.Email,
+                                                                    password: this.Passwort, 
+                                                                    firstName: this.Vorname,
+                                                                    lastName: this.Name,});
 
       this.$router.push('/login')
     }
