@@ -9,6 +9,7 @@ import ShowingsList from './ShowingsList.vue';
 
 const movies = ref([]);
 const showings = ref([]);
+const featInd = ref(3);
 
 onMounted(async () => {
     try {
@@ -38,27 +39,27 @@ onMounted(async () => {
 
 
 <template>
-    <FeaturedMovie v-if="movies.length" :movie="movies[0]" :featInd="3">
+    <FeaturedMovie v-if="movies.length" :movie="movies[featInd]">
         <template #poster>
-            <img :src="movies[0].posterUrl" :alt="movies[0].name + ' Poster'">
+            <img :src="movies[featInd].posterUrl" :alt="movies[featInd].name + ' Poster'">
         </template>
         <template #title>
             <h2>
-                <a :href="movies[0].link">{{ movies[0].name }}</a>
+                <a :href="movies[featInd].link">{{ movies[featInd].name }}</a>
             </h2>
         </template>
         <template #genre>
-            <p>{{ movies[0].genre }}</p>
+            <p>{{ movies[featInd].genre }}</p>
         </template>
         <template #duration>
-            <p>{{ movies[0].duration }} Minutes</p>
+            <p>{{ movies[featInd].duration }} Minutes</p>
         </template>
         <template #description>
-            <p>{{ movies[0].description }}</p>
+            <p>{{ movies[featInd].description }}</p>
         </template>
         <template #action>
             <!-- <button type="button" class="buy-ticket" value="Buy Ticket" aria-describedby="basic-addon1" role="link"> -->
-            <a :href="'#' + movies[0].name" class="buy-ticket" style="color: black;">
+            <a :href="'#' + movies[featInd].name" class="buy-ticket" style="color: black;">
                 Tickets kaufen
             </a>
             <!-- v-on:click="onBuy(movies[0])" role="link"> -->
@@ -170,9 +171,6 @@ font-size: 1rem;
     .showing-item__time:hover {
         color: #007bff;
     }
-    .showing-item__date:hover {
-        color: #007bff;
-    }
 
 
   .buy-ticket {
@@ -229,14 +227,9 @@ export default {
         return res.data;
     },
     getDate(date) {
-        // var someDate = new Date();
-        // var result = someDate.setDate(someDate.getDate() + offset);
-        // return result.getDate() + "." + (result.getMonth() + 1);
-        // console.log(date);
         return TimeConverterService.convertDate(date);
     },
     getTime(time) {
-        // console.log(time);
         return TimeConverterService.convertTime(time);
     }
   }

@@ -11,27 +11,36 @@
                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                     </svg>
                     <span class="font-weight-bold">{{ this.$store.getters.getNameVorname }}</span>
-                    <span class="text-black-50">{{ this.$store.getters.getKundenDaten.Email }}</span>
+                    <span class="">{{ this.$store.getters.getKundenDaten.Email }}</span>
                     <span> </span>
                 </div>
             </div>
             <div class="col-md-5">
                 <div class="p-3 py-5">
+                <form action="" method="post" v-on:submit.prevent="onDatenSpeichern">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4 class="text-right">Profil Bearbeiten</h4>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control"
-                                placeholder="Name" v-model=this.Name></div>
-                        <div class="col-md-6"><label class="labels">Vorname</label><input type="text"
-                                class="form-control" v-model=this.Vorname placeholder="Vorname"></div>
+                        <div class="col-md-6">
+                            <label class="labels">Name</label>
+                            <input type="text" class="form-control" placeholder="Name" v-model=this.Name>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">Vorname</label>
+                            <input type="text" class="form-control" v-model=this.Vorname placeholder="Vorname">
+                        </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-12"><label class="labels">Email</label><input type="text"
-                                class="form-control" placeholder="Email" v-model=this.Email></div>
+                        <div class="col-md-12">
+                            <label class="labels">Email</label>
+                            <input type="text" class="form-control" placeholder="Email" v-model=this.Email>
+                        </div>
                     </div>
-                    <div class="mt-3 text-center"><button class="input-group-text saveButton" type="button"
-                            v-on:click.prevent="onDatenSpeichern">Speichern</button></div>
+                    <div class="mt-3 text-center">
+                        <input class="input-group-text saveButton" type="submit" value="Speichern"></input>
+                    </div>
+                </form>
                 </div>
             </div>
             <div class="col-md-4">

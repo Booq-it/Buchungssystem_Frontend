@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg bg-custom m-3">
+    <nav class="navbar navbar-expand-lg bg-custom">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">Buchungssystem</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -72,13 +72,16 @@
   
   nav {
     padding: 30px;
-    margin-bottom: 4rem;
-    border-radius: 10px;
+    /* margin-bottom: 4rem; */
+    position: fixed;
+    top: 0;
+    height: 10%;
+    /* border-radius: 10px; */
   }
   
   nav a {
     font-weight: bold;
-    color: #2c3e50;
+    color: #d5d6d6;
     text-decoration: none;
   }
   
@@ -86,21 +89,35 @@
     color: #f1f1f1;
   }
   nav a:hover {
-    color: #5c5959;
+    color: #ffffff;
   }
   
   .bg-custom,
   .dropdown-menu {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(135, 130, 130, 0.7);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    /* border: 1px solid rgba(255, 255, 255, 0.3); */
+    z-index: 1000;
   }
   
   svg {
     margin: 0 0 0 1em;
   }
+  .navbar {
+  width: 100%; /* Ensure full width */
+  border-radius: 0; /* Remove rounding */
+  margin: 0; /* Remove any margin */
+}
+/* .dropdown-menu a:hover{
+  color: black;
+} */
+.dropdown-item:focus, .dropdown-item:hover {
+  color: #514e4e;
+  text-decoration: none;
+  background-color: #adb0b4;
+}
   </style>
   

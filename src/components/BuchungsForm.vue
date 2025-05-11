@@ -1,92 +1,91 @@
-<template>
-<div class="border rounded bg-custom container p-5 text-start">
-    <form>
-    <p class="h2 mb-5">Sitzplatz buchen</p>
-    <div class="mb-3">
-        <label for="bezeichnung" class="form-label">Filmtitel</label>
-        <input type="text" class="form-control" id="bezeichnung" disabled  v-model="name">
-    </div>
-    <div class="row mt-4 mb-4">
-        <div class="col">
-        <label for="bezeichnung" class="form-label">Startdatum</label>
-        <input type="date" class="form-control" id="startdatum" disabled placeholder="Startdatum" v-model="date">
-        </div>
-        <div class="col">
-        <label for="bezeichnung" class="form-label">Uhrzeit</label>
-        <input type="text" class="form-control" id="enddatum" disabled placeholder="Uhrzeit" v-model="time">
-        </div>
-    </div>
-    <div class="mb-3">
-        <label for="bezeichnung" class="form-label">Boot</label>
-        <div class="input-group">
-        <select class="form-select" v-model="selected">
-        <option :value="-1" disabled>Bitte Boot wählen oder Anlegen</option>        
-        <option v-for="Boot in BooteDesUsers" v-bind:key="Boot.m_RegistrierungsId" v-bind:value="Boot.m_RegistrierungsId">
-            {{Boot.m_Name}}
-        </option>
-        </select>
-        <span class="input-group-text" id="basic-addon2" href="#" v-on:click.prevent="toggleComponent()">+</span>
-    </div>
-    </div>
+<script setup>
+    const seats = new Map([
+        [55, {isUnavailable: true}],
+        [56, {isUnavailable: true}],
+        [65, {isUnavailable: true}],
+        [66, {isUnavailable: true}],
+        [67, {isUnavailable: true}],
+        [68, {isUnavailable: true}],
+        [69, {isUnavailable: true}],
+        [70, {isUnavailable: true}],
+        [71, {isUnavailable: true}],
+        [72, {isUnavailable: true}],
+        [73, {isUnavailable: true}],
+        [74, {isUnavailable: true}],
+        [75, {isUnavailable: true}],
+        [1, {isUnavailable: true}],
+    ]);
+    const seatId = 0
+    const totalSideSeats = 30
+    const totalCenterSeats = 100
+</script>
 
-    <div class="row mt-4 mb-4">
-        <label for="nebenkosten" class="form-label">Nebenkosten</label>
-        <div class="form-check col">
-        <input class="form-check-input nkt" type="checkbox" value="" v-model="StromGebucht" v-on:change="getFullPrice" id="strom">
-        <label class="form-check-label" for="strom">
-            Strom (Preis: {{ StromPreis }}€)
-        </label>
-        </div>
-        <div class="form-check col">
-        <input class="form-check-input nkt" type="checkbox" value="" v-model="WasserGebucht" v-on:change="getFullPrice" id="wasser">
-        <label class="form-check-label" for="wasser">
-            Wasser (Preis: {{ WasserPreis }}€)
-        </label>
-        </div>
-    </div>
-    
-    <div class="mb-3">
-        <label for="tagespreis" class="form-label">Tagespreis</label>
-        <input type="text" class="form-control" id="tagespreis" disabled v-model="price">
-    </div>
-    <div class="mb-3">
-        <label for="tagespreis" class="form-label">Gesamtpreis</label>
-        <input type="text" class="form-control" id="gesamtpreis" disabled v-model="Gesamtpreis">
-    </div>
-    <button type="submit" class="input-group-text" v-on:click.prevent="onBuchen">Platz buchen</button>
-    </form>
-</div>
-<div class="border rounded container p-5 text-start mt-5" v-show="visible">
-    <form>
-    <p class="h2 mb-5">Boot anlegen</p>
-    <div class="mb-3">
-        <label for="bezeichnung" class="form-label">Registrierungsnummer</label>
-        <input type="text" class="form-control" id="Registrierung" v-model="registrierungsid">
-    </div>
-    <div class="mb-3">
-        <label for="bezeichnung" class="form-label">Bootsname</label>
-        <input type="text" class="form-control" id="boot_name" v-model="Boot_name">
-    </div>
-    <div class="mb-3">
-        <label for="bezeichnung" class="form-label">Länge</label>
-        <input type="number" class="form-control" id="laenge" v-model="Laenge">
-    </div>      
-    <div class="mb-3">
-        <label for="tagespreis" class="form-label">Breite</label>
-        <input type="number" class="form-control" id="breite" v-model="Breite">
-    </div>
-    <div class="mb-3">
-        <label for="tagespreis" class="form-label">Tiefe</label>
-        <input type="number" class="form-control" id="tiefe" v-model="Tiefe">
-    </div>
-    <button type="submit" class="input-group-text" v-on:click.prevent="onBootAnlegen">Boot speichern</button>
-    </form>
-</div>
+<template>
+	<div id="app">
+		<div class="seat-map-container">
+			<div class="seat-map">
+				<ul class="seat-map-info">
+					
+					<li class="seat-map-info-item">
+						<div class="seat"></div>
+						Empty
+					</li>
+					<li class="seat-map-info-item">
+						<div class="seat seat-disabled"></div>
+						Sold
+					</li>
+					<li class="seat-map-info-item">
+						<div class="seat seat-active"></div>
+						Selected
+					</li>
+				</ul>
+				<div class="seat-map-screen">Screen</div>
+				<form id="seat-form" class="seats" @submit.prevent="onBuchen">
+					<div class="seats-side">
+						<label v-for="seat in totalSideSeats" :key="seat" class="seat">
+							<input
+								name="seat"
+								type="checkbox"
+								:value="`${seatId}`"
+								:disabled="(seats.get(seatId++))?.isUnavailable"
+								class="visually-hidden" 
+							/>
+						</label>
+					</div>
+                    <div class="seats-center">
+						<label v-for="seat in totalCenterSeats" :key="seat" class="seat">
+							<input
+								name="seat"
+								type="checkbox"
+								:value="seatId"
+								:disabled="(seats.get(seatId++))?.isUnavailable"
+								class="visually-hidden"
+							/>
+						</label>
+					</div>
+					<div class="seats-side">
+						<label v-for="seat in totalSideSeats" :key="seat" class="seat">
+							<input
+								name="seat"
+								type="checkbox"
+								:value="seatId"
+								:disabled="(seats.get(seatId++))?.isUnavailable"
+								class="visually-hidden"
+							/>
+						</label>
+					</div>
+				</form>
+			</div>
+		</div>
+		<button class="get-seat-button" form="seat-form">Buchen</button>
+	</div>
 </template>
 
 <script>
 import axios from 'axios'
 import APIURLService from '../services/API.service';
+
+
 
 export default {
 name: 'BuchungsForm',
@@ -102,55 +101,59 @@ return{
     fsk: null,
     description: null,
     showings: null,
-    selected: -1,
+    selected: [],
     visible: false,
+    showingId: null,
+    date: null,
+    time: null,
 };
 },
 methods:{
-toggleComponent() {
-    this.visible = !this.visible;
-},
-getFullPrice() {
-    console.log("test");
-    
-},
 async onBuchen(){
 
     const kunden_id = this.$store.getters.getKundenId;
-    // const startdatum = this.$store.getters.;
-    // const liegeplatzid = this.$store.getters.getLiegeplatzId;
 
-    var res = await axios.post(APIURLService.getAPIUrl()+'/api/Buchung/CreateBuchung',{ kundenid: kunden_id,
-                                                                                    liegeplatzid: liegeplatzid,
-                                                                                    registrierungsid: this.selected,
-                                                                                    start: startdatum,
-                                                                                    end: enddatum,
-                                                                                    wasser: this.WasserGebucht,
-                                                                                    strom: this.StromGebucht});
-    console.log(res.data);
-    if(res.data != -1){
-    //buchung Erfolg
-    this.$router.push('/buchungen')
-    }else{
-    //buchung klappte nichtz
+    const checkboxes = document.querySelectorAll('#seat-form input[type="checkbox"]:checked');
+    this.selected = Array.from(checkboxes).map(cb => Number(cb.value));
+    let test = [];
+    for (let i = 0; i < this.selected.length; i++) {
+        test.push(this.selected[i]);
     }
 
-},
-async onBootAnlegen(){
-    await axios.post(APIURLService.getAPIUrl()+'/api/Kunden/CreateBoot',{ name: this.Boot_name,
-                                                                                registrierungsid: this.registrierungsid,
-                                                                                laenge: this.Laenge,
-                                                                                breite: this.Breite,
-                                                                                tiefe: this.Tiefe,
-                                                                                benutzerId: this.$store.getters.getKundenId
-                                                                                });
-    this.toggleComponent();
+    console.log(test);
+    
+    if (this.selected.length == 0){
+        alert("Bitte wählen Sie einen Platz aus");
+        return;
+    }
+
+    try {
+        var res = await axios.post(APIURLService.getAPIUrl()+'/api/Booking/MakeBooking', {
+            userId: kunden_id,
+            showingId: this.showingId,
+            seatId: this.selected
+        });
+        console.log(res.data);
+
+        if (res.data != -1) {
+            //buchung Erfolg
+            this.$router.push('/buchungen')
+        } else {
+            //buchung klappte nichtz
+            alert("Oh oh, es kracht!");
+        }
+    } catch (error) {
+        console.error('API call failed:', error);
+        alert("Es gab ein Problem mit der Buchung. Bitte versuchen Sie es später erneut.");
+    }
+
 }
 },
 setup(){
 
 },
 async created(){
+    window.scrollTo(0, 0);
 
     const movie = this.$store.getters.getFilmdata;
     this.id = movie.id;
@@ -163,7 +166,7 @@ async created(){
     this.description = movie.description;
 
     const showing = this.$store.getters.getShowingdata;
-    this.id = showing.id;
+    this.showingId = showing.id;
     this.date = showing.date;
     this.time = showing.time;
 
@@ -178,20 +181,111 @@ async created(){
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.container{
-background-color: #fff;
+
+.seat-map-container {
+    --color-primary: #dddddd;
+    --color-disabled: #6d6d6d;
+    --border-disabled: #6d6d6d;
+    background-color: rgb(0, 0, 0);
+	padding: 1.5rem 2rem;
+    margin: 0 auto;
+    width: 60%;
+    min-width: 800px;
 }
-button{
-    position: relative;
-    left: 100%;
-    transform: translate(-100%, 0);
-    margin: 0;
+
+.seat-map-info {
+	display: flex;
+	justify-content: center;
+	gap: 2rem;
 }
-span:hover{
-    cursor: pointer;
+
+.seat-map-info-item {
+	display: inline-flex;
+	gap: 0.5rem;
 }
-.nkt{
-margin: 5px;
+
+.seat-map {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.seat-map-screen {
+	--screen-width: 100%;
+	width: var(--screen-width);
+	text-align: center;
+	padding: 0.5rem;
+	border: 2px solid var(--color-primary);
+}
+
+.seats {
+	--seats-gap: 0.5rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+.seats-center {
+	height: 100%;
+	display: grid;
+	gap: var(--seats-gap);
+	grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+
+.seats-side {
+	height: 100%;
+	display: grid;
+	gap: var(--seats-gap);
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.seat {
+	--seat-background: transparent;
+	--seat-border: var(--color-primary);
+	--seat-border-width: 2px;
+	width: 2rem;
+	height: 2rem;
+	background-color: var(--seat-background);
+	border-width: var(--seat-border-width);
+	border-style: solid;
+	border-color: var(--seat-border);
+	border-radius: calc(infinity * 1px);
+}
+
+.seat:has(input[type="checkbox"]) {
+	cursor: pointer;
+}
+	
+.seat-active, .seat:has(input[type="checkbox"]:checked) {
+	--seat-background: var(--color-primary);
+	--seat-border: var(--color-primary);
+	cursor: auto;
+}
+
+.seat-disabled, .seat:has(input[type="checkbox"]:disabled) {
+	--seat-background: var(--color-disabled);
+	--seat-border: var(--border-disabled);
+	cursor: auto;
+}
+
+.get-seat-button {
+	display: inline-block;
+	width: 60%;
+	padding: 2rem;
+	margin-top: 1rem;
+
+}
+	
+/* Utility Style */
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border-width: 0;
 }
 </style>
 
