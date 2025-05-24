@@ -20,9 +20,12 @@ export default createStore({
         },
         Showingdata: {
             id: null,
+            basePrice: null,
+            is3D: null,
             date: null,
             time: null,
             cinemaId: null,
+            movieId: null,
             seats: null
         },
         Kundendaten:{
@@ -56,11 +59,14 @@ export default createStore({
             },
             setShowingdata: (state, showingdata)=>{
                 state.Showingdata.id = showingdata.id;
+                state.Showingdata.basePrice = showingdata.basePrice;
+                state.Showingdata.is3D = showingdata.is3D;
                 state.Showingdata.date = TimeConverterService.convertDate(showingdata.date);
                 state.Showingdata.time = TimeConverterService.convertTime(showingdata.date);
                 // state.Showingdata.date = showingdata.date.split('T')[0];
                 // state.Showingdata.time = showingdata.date.split('T')[1];
-                state.Showingdata.cinemaId = showingdata.cinemaId;
+                state.Showingdata.cinemaId = showingdata.cinemaRoomId;
+                state.Showingdata.movieId = showingdata.movieId;
                 state.Showingdata.seats = showingdata.seats;
             },
             clearShowingdata: (state)=>{

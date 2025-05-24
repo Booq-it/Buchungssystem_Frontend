@@ -36,7 +36,7 @@ padding: 15px;
 border-radius: 8px;
 background: #4f4b4b;
 box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-width: 100%; /* Make it take full width */
+width: 80%; /* Make it take full width */
 margin: 20px auto; /* Center it horizontally */
 }
 .poster img {

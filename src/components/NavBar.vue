@@ -38,7 +38,7 @@
                   <a class="dropdown-item" href="/profile">Profil Bearbeiten</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="#" v-on:click.prevent="logOut()">Logout</a>
+                  <a class="dropdown-item" href="#" v-on:click.prevent="logOut()">Ausloggen</a>
                 </li>
               </ul>
             </div>

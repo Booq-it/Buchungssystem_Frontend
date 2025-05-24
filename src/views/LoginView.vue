@@ -75,6 +75,16 @@
   </script>
   
   <style scoped>
+  .form {
+    position: inherit;
+    width: 50%;
+    transform: translate(0%, 0%);
+  }
+
+  form {
+    width: 50%;
+    transform: translate(50%, 0%);
+  }
   
   button{
     margin-left: 1rem;

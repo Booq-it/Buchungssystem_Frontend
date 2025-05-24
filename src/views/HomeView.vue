@@ -63,24 +63,24 @@ import NavBar from '../components/NavBar.vue';
     }
   }
 
-  const movies = [
-      {
-        id: 1,
-        title: 'Film 1',
-        description: 'Beschreibung von Film 1',
-        poster: 'placeholder',
-      },
-      {
-        id: 2,
-        title: 'Film 2',
-        description: 'Beschreibung von Film 2',
-        poster: 'placeholder',
-      },
-      {
-        id: 3,
-        title: 'Film 3',
-        description: 'Beschreibung von Film 3',
-        poster: 'placeholder',
-      },
-    ];
+  // const movies = [
+  //     {
+  //       id: 1,
+  //       title: 'Film 1',
+  //       description: 'Beschreibung von Film 1',
+  //       poster: 'placeholder',
+  //     },
+  //     {
+  //       id: 2,
+  //       title: 'Film 2',
+  //       description: 'Beschreibung von Film 2',
+  //       poster: 'placeholder',
+  //     },
+  //     {
+  //       id: 3,
+  //       title: 'Film 3',
+  //       description: 'Beschreibung von Film 3',
+  //       poster: 'placeholder',
+  //     },
+  //   ];
   </script>
