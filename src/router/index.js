@@ -5,6 +5,7 @@ import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import BuchenView from '@/views/BuchenView.vue'
+import BuchungenView from '@/views/BuchungenView.vue'
 
 const routes = [
   {
@@ -36,7 +37,12 @@ const routes = [
     path: '/buy',
     name: 'buy',
     component: BuchenView
-  }
+  },
+  {
+    path: '/bookings',
+    name: 'bookings',
+    component: BuchungenView
+  },
 ]
 
 const router = createRouter({

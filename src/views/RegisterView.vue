@@ -64,6 +64,11 @@
     .login{
       float: left;
     }
+    .form{
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
     .register{
       position: absolute;
       left: 50%;

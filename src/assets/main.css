@@ -19,11 +19,6 @@
   padding: 3px;
 } */
 
-body {
-  display: flex;
-  padding-top: 20%;
-  padding-bottom: 10%;
-}
 
 @media (hover: hover) {
   a:hover {
@@ -32,11 +27,7 @@ body {
 }
 
 @media (min-width: 1024px) {
-  body {
-    display: flex;
-    padding-top: 10%;
-    padding-bottom: 10%;
-  }
+  
 
   #app {
     

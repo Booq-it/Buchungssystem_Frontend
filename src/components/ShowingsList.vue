@@ -1,19 +1,12 @@
 <template>
-    <div class="showings-list">
+    <div class="showing-list">
         <slot name="showings"></slot>
     </div>
 </template>
 
 
 <style scoped>
-    .showings-list {
-        padding: 20px;
-        /* background-color: #f8f9fa; */
-        border-radius: 5px;
-        margin-top: 20px;
-        display: flex;
-        flex-direction: row;
-    }
+    
 </style>
 
 <!-- <script>

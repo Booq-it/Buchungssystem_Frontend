@@ -1,12 +1,12 @@
 <template>
-    <nav class="navbar navbar-expand-lg bg-custom">
+    <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">Buchungssystem</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse navbar-links" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="/">Home</a>
@@ -32,7 +32,7 @@
   
               <ul class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item" aria-current="page" href="/">Buchungen</a>
+                  <a class="dropdown-item" aria-current="page" href="/bookings">Buchungen</a>
                 </li>
                 <li>
                   <a class="dropdown-item" href="/profile">Profil Bearbeiten</a>
@@ -63,38 +63,45 @@
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
   <style scoped>
-  #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
-  }
   
-  nav {
-    padding: 30px;
-    /* margin-bottom: 4rem; */
+  
+  .navbar {
     position: fixed;
     top: 0;
-    height: 10%;
-    /* border-radius: 10px; */
+    z-index: 1000;
+      background-color: #1a1a1a;
+      color: white;
+      padding: .3rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   }
-  
-  nav a {
-    font-weight: bold;
-    color: #d5d6d6;
-    text-decoration: none;
+
+  .navbar-brand {
+      color: white;
+      font-size: 1.8rem;
+      font-weight: bold;
   }
-  
-  nav a.router-link-exact-active {
-    color: #f1f1f1;
+
+  .navbar-links {
+      display: flex;
+      gap: 1.5rem;
   }
-  nav a:hover {
-    color: #ffffff;
+
+  .navbar-links a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+  }
+
+  .navbar-links a:hover {
+      color: #ff6b6b;
   }
   
   .bg-custom,
   .dropdown-menu {
-    background: rgba(135, 130, 130, 0.7);
+    background-color: black;
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
@@ -102,22 +109,20 @@
     /* border: 1px solid rgba(255, 255, 255, 0.3); */
     z-index: 1000;
   }
+  .dropdown-menu {
+    transform: translate(-20%, 0);
+  }
   
   svg {
     margin: 0 0 0 1em;
   }
-  .navbar {
-  width: 100%; /* Ensure full width */
-  border-radius: 0; /* Remove rounding */
-  margin: 0; /* Remove any margin */
-}
 /* .dropdown-menu a:hover{
   color: black;
 } */
-.dropdown-item:focus, .dropdown-item:hover {
+/* .dropdown-item:focus, .dropdown-item:hover {
   color: #514e4e;
   text-decoration: none;
   background-color: #adb0b4;
-}
+} */
   </style>
   

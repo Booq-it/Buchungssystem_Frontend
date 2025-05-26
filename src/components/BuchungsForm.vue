@@ -141,7 +141,7 @@ return{
 	seats: [],
 	totalSideSeats: 30,
 	totalCenterSeats: 100,
-	basePrice: 12,
+	basePrice: null,
 	calculatedPrice: '0.00 €',
 };
 },
@@ -194,12 +194,13 @@ async onBuchen(){
         if (res.data != -1) {
             //buchung Erfolg
             // this.$router.push('/buchungen')
-            this.$router.go()
-			// this.$router.push({
-			// 	name: 'Buchungen',
-			// 	params: { bookingId: res.data }
-			// });
-			alert("Buchung erfolgreich! Sie werden zur Kaufseite weitergeleitet.");
+            // this.$router.go()
+			this.$router.push({
+				name: 'bookings',
+				params: { bookingId: res.data }
+			});
+			console.log(this.id)
+			alert("Buchung erfolgreich! Sie werden zur Buchungsübersicht weitergeleitet.");
         } else {
             //buchung klappte nichtz
             alert("Oh oh, es kracht!");

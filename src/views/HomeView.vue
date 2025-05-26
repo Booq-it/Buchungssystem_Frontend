@@ -8,12 +8,18 @@ import NavBar from '../components/NavBar.vue';
 
 <template>
   <main> 
-    <MovieList/>
+    <div class="container">
+      <MovieList/>
+    </div>
 
   </main>
 </template>
 
 <style scoped>
+.container {
+    max-width: 1200px;
+    padding: 0 1rem;
+}
 </style>
 
 <script>

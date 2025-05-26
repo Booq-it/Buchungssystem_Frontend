@@ -76,15 +76,12 @@
   
   <style scoped>
   .form {
-    position: inherit;
-    width: 50%;
-    transform: translate(0%, 0%);
+    width: 25%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 
-  form {
-    width: 50%;
-    transform: translate(50%, 0%);
-  }
   
   button{
     margin-left: 1rem;

@@ -2,7 +2,7 @@
 
     <div class="container rounded bg-custom mt-5 mb-5">
         <div class="row">
-            <div class="col-md-3 border-right">
+            <div class="col-md-2 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="82" height="82" fill="currentColor"
                         class="bi bi-person-bounding-box profilePic" viewBox="0 0 16 16">
@@ -43,7 +43,7 @@
                 </form>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 add">
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center experience"><span>Passwort
                             ändern</span></div><br>
@@ -143,6 +143,15 @@ export default {
 </script>
 
 <style scoped>
+.container {
+    max-width: 1200px;
+    padding: 0 1rem;
+    position: relative;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
 .profilePic {
     margin-top: 2em;
     margin-bottom: 1em;
@@ -157,4 +166,5 @@ export default {
 .border-right {
     border-right: 1px solid rgba(192, 176, 176, 0.425);
 }
+
 </style>

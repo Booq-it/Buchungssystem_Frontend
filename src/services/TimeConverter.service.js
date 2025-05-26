@@ -1,7 +1,7 @@
 class DateConverterService {
     convertDate(inputDate) {
         if (!inputDate || typeof inputDate !== 'string' || !inputDate.includes('T')) {
-            throw new Error('Invalid input for convertDate');
+            throw new Error('Invalid input for convertDate: ' + inputDate);
         }
         let date, month, year;
         // console.log(inputDate);
