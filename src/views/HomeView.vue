@@ -32,14 +32,11 @@ import NavBar from '../components/NavBar.vue';
     methods:{
       created(){
         const name = this.$store.getters.getNameVorname;
-        console.log(name)
-        console.log("Test");
       },
       async getMovies(){
         axios.get(APIURLService.getAPIUrl()+'/api/Showing').then(
           (response)=>{
             movies = response.data;
-            console.log(movies);
           }
         )
       }
@@ -56,7 +53,6 @@ import NavBar from '../components/NavBar.vue';
                                                                                         end: enddatum,
                                                                                         wasser: this.WasserGebucht,
                                                                                         strom: this.StromGebucht});
-        console.log(res.data);
         if(res.data != -1){
           //buchung Erfolg
           this.$router.push('/buchungen')

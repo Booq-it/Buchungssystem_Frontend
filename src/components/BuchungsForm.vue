@@ -1,121 +1,123 @@
 <script setup>
-    // const seats = new Map([
-    //     [55, {isAvailable: true}],
-    //     [56, {isAvailable: true}],
-    //     [65, {isAvailable: true}],
-    //     [66, {isAvailable: true}],
-    //     [67, {isAvailable: true}],
-    //     [68, {isAvailable: true}],
-    //     [69, {isAvailable: true}],
-    //     [70, {isAvailable: true}],
-    //     [71, {isAvailable: true}],
-    //     [72, {isAvailable: true}],
-    //     [73, {isAvailable: true}],
-    //     [74, {isAvailable: true}],
-    //     [75, {isAvailable: true}],
-    //     [1, {isAvailable: true}],
-    // ]);
-	// const seatCount = 0;
+    
 </script>
 
 <template>
-	<div class="movie-info-modern" v-if="id">
-		<h2 class="movie-title">{{ name }}</h2>
-		<ul class="movie-details">
-			<li>
-				<span class="detail-label">Dauer: </span>
-				<span class="detail-value">{{ duration }} min</span>
-			</li>
-			<li>
-				<span class="detail-label">FSK: </span>
-				<span class="detail-value">{{ fsk }}</span>
-			</li>
-			<li>
-				<span class="detail-label">Datum: </span>
-				<span class="detail-value">{{ date }}</span>
-			</li>
-			<li>
-				<span class="detail-label">Uhrzeit: </span>
-				<span class="detail-value">{{ time }}</span>
-			</li>
-		</ul>
-		<div class="booking-summary" v-if="basePrice !== null">
-			<p>
-				<strong>Ausgewählte Plätze: </strong>
-				<span v-if="selectedCount">{{ selectedCount }}</span><!-- {{ selected.join(', ') }}</span> -->
-				<span v-else>Keine</span>
-			</p>
-			<p>
-				<strong>Gesamtpreis: </strong>
-				<span id="total-price">
-					{{ calculatedPrice }}
-				</span>
-			</p>
+	<div class="cont">
+		<div class="titleDiv">
+			<h2>Buchung</h2>
 		</div>
-	</div>
-	<div id="app">
-		<div class="seat-map-container">
-			<div class="seat-map">
-				<ul class="seat-map-info">
-					
-					<li class="seat-map-info-item">
-						<div class="seat"></div>
-						Frei
-					</li>
-					<li class="seat-map-info-item">
-						<div class="seat seat-disabled"></div>
-						Reserviert
-					</li>
-					<li class="seat-map-info-item">
-						<div class="seat seat-active"></div>
-						Ausgewählt
-					</li>
-				</ul>
-				<div class="seat-map-screen">Leinwand</div>
-				<form id="seat-form" class="seats" @submit.prevent="onBuchen">
-					<div class="seats-side">
-						<label v-for="(seat, idx) in totalSideSeats" :key="idx" class="seat">
-							<input
-								name="seat"
-								type="checkbox"
-								:value="idx"
-								:disabled="!seats[idx]?.isAvailable"
-								class="visually-hidden"
-								v-on:click="calculatePrice"/>
-						</label>
-					</div>
-                    <div class="seats-center">
-						<label v-for="(seat, idx) in totalCenterSeats" :key="idx" class="seat">
-							<input
-								name="seat"
-								type="checkbox"
-								:value="totalSideSeats + idx"
-								:disabled="!seats[totalSideSeats + idx]?.isAvailable"
-								class="visually-hidden"
-								v-on:click="calculatePrice"/>
-						</label>
-					</div>
-					<div class="seats-side">
-						<label v-for="(seat, idx) in totalSideSeats" :key="idx" class="seat">
-							<input
-								name="seat"
-								type="checkbox"
-								:value="totalSideSeats + totalCenterSeats + idx"
-								:disabled="!seats[totalSideSeats + totalCenterSeats + idx]?.isAvailable"
-								class="visually-hidden"
-								v-on:click="calculatePrice"/>
-						</label>
-					</div>
-				</form>
+		<div class="movie-info">
+			<div class="movie-poster">
+				<img :src="this.posterUrl" :alt="this.title + ' Poster'">
+			</div>
+			<div class="movie-details">
+				<h2 class="movie-title">{{ this.title }}</h2>
+				<div class="movie-meta">
+					<span>{{this.genre}}</span>
+					<span>{{ this.duration }} Minutes</span>
+					<span>FSK: {{ this.fsk }}</span>
+					<span>Director: {{ this.director }}</span>
+				</div>
+				<p class="movie-description">
+					{{ this.description }}
+				</p>
+				<div class="movie-showtime">
+					<strong>Vorführung:</strong> {{ formatDate(this.date) }}
+				</div>
+				<span class="three-d-badge" v-if="this.is3D">3D</span>
 			</div>
 		</div>
-		<button class="get-seat-button" form="seat-form">Buchen</button>
+		<div id="app">
+			<div class="seat-map-container">
+				<div class="seat-map">
+					<ul class="seat-map-info">
+						
+						<li class="seat-map-info-item">
+							<div class="seat"></div>
+							Frei
+						</li>
+						<li class="seat-map-info-item">
+							<div class="seat seat-disabled"></div>
+							Reserviert
+						</li>
+						<li class="seat-map-info-item">
+							<div class="seat seat-active"></div>
+							Ausgewählt
+						</li>
+					</ul>
+					<div class="seat-map-screen">Leinwand</div>
+					<form id="seat-form" class="seats" @submit.prevent="onBuy">
+						<div class="seats-side">
+							<label v-for="(seat, idx) in totalSideSeats" :key="idx" class="seat">
+								<input
+									name="seat"
+									type="checkbox"
+									:value="seats[idx]?.id"
+									:disabled="!seats[idx]?.isAvailable"
+									class="visually-hidden"
+									v-on:click="calculatePrice"/>
+							</label>
+						</div>
+						<div class="seats-center">
+							<label v-for="(seat, idx) in totalCenterSeats" :key="idx" class="seat">
+								<input
+									name="seat"
+									type="checkbox"
+									:value="seats[totalSideSeats + idx]?.id"
+									:disabled="!seats[totalSideSeats + idx]?.isAvailable"
+									class="visually-hidden"
+									v-on:click="calculatePrice"/>
+							</label>
+						</div>
+						<div class="seats-side">
+							<label v-for="(seat, idx) in totalSideSeats" :key="idx" class="seat">
+								<input
+									name="seat"
+									type="checkbox"
+									:value="seats[totalSideSeats + totalCenterSeats + idx]?.id"
+									:disabled="!seats[totalSideSeats + totalCenterSeats + idx]?.isAvailable"
+									class="visually-hidden"
+									v-on:click="calculatePrice"/>
+							</label>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="booking-summary" id="bookingSummary">
+				<h3>Buchungsübersicht</h3>
+				<p>Ausgewählte Sitze: 
+					<span id="selectedSeats" v-if="selectedSeats">{{ selectedSeats }}</span>
+					<span v-else>Keine</span>
+				</p>
+				<p>Tickets insgesamt: 
+					<span id="ticketCount" v-if="selectedCount">{{ selectedCount }}</span>
+					<span v-else>Keine</span>
+				</p>
+				<!-- <p>Preis pro Ticket: <span id="ticketPrice">{{ this.basePrice.toFixed(2) }} €</span></p> -->
+				<p>Gesamtpreis: <span id="totalPrice">{{ calculatedPrice }}</span></p>
+				<button id="bookBtn" v-if="this.$store.getters.getKundenId" v-on:click="onBuy">Tickets buchen</button>
+			</div>
+		</div>
+		<div class="booking-form" id="bookingForm" v-if="!this.$store.getters.getKundenId">
+            <h3>Buchung abschließen</h3>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" required class="form-control" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required class="form-control" placeholder="Email">
+            </div>
+            <button id="bookBtn">Tickets buchen</button>
+        </div>
 	</div>
 </template>
 
 <script>
 import axios from 'axios'
 import APIURLService from '../services/API.service';
+import TimeConverterService from '@/services/TimeConverter.service';
 
 
 export default {
@@ -134,11 +136,14 @@ return{
     showings: null,
     selected: [],
 	selectedCount: 0,
+	selectedSeats: null,
+	selectedSeatObjs: [],
     visible: false,
     showingId: null,
     date: null,
     time: null,
 	seats: [],
+	is3D: false,
 	totalSideSeats: 30,
 	totalCenterSeats: 100,
 	basePrice: null,
@@ -146,15 +151,15 @@ return{
 };
 },
 methods:{
-async onBuchen(){
+async onBuy(){
 
     const kundenId = this.$store.getters.getKundenId;
 
     const checkboxes = document.querySelectorAll('#seat-form input[type="checkbox"]:checked');
     this.selected = Array.from(checkboxes).map(cb => Number(cb.value));
     let test = Array();
-    for (let i = 0; i < this.selected.length; i++) {
-        test.push(this.seats[this.selected[i]].id);
+    for (let seat of this.selectedSeatObjs) {
+        test.push(seat.id);
     }
 
     
@@ -164,12 +169,6 @@ async onBuchen(){
     }
 
 
-	// console.log(test);
-	// console.log(this.id);
-	// console.log(this.selected);
-	// console.log(kundenId);
-	// console.log(this.showingId);
-
     try {
 		const axiosConfig = {
 			params: {
@@ -178,31 +177,21 @@ async onBuchen(){
 				seatIds: [...test]
 			}
 		};
-		console.log(axiosConfig);
 
 
-		// var res = await axios.post(
-		// 	APIURLService.getAPIUrl()+'/api/Booking/MakeBooking',axiosConfig
-		// );
 		var res = await axios.post(
 			APIURLService.getAPIUrl() + '/api/Booking/MakeBooking?userId=' + kundenId + '&showingId=' + this.showingId + test.map(id => '&seatIds=' + id).join('')
 		);
 
 
-        console.log(res.data);
 
         if (res.data != -1) {
-            //buchung Erfolg
-            // this.$router.push('/buchungen')
-            // this.$router.go()
 			this.$router.push({
 				name: 'bookings',
 				params: { bookingId: res.data }
 			});
-			console.log(this.id)
 			alert("Buchung erfolgreich! Sie werden zur Buchungsübersicht weitergeleitet.");
         } else {
-            //buchung klappte nichtz
             alert("Oh oh, es kracht!");
         }
     } catch (error) {
@@ -211,18 +200,30 @@ async onBuchen(){
     }
 
 },
+formatDate(date) {
+	return TimeConverterService.formatDate(new Date(date), true);
+},
 async calculatePrice() {
 	let price = 0;
 	const checkboxes = document.querySelectorAll('#seat-form input[type="checkbox"]:checked');
     let keep = Array.from(checkboxes).map(cb => Number(cb.value));
-	// console.log(keep);
-	// console.log(this.basePrice);
-	for (let i = 0; i < keep.length; i++) {
-        price += (this.basePrice + this.seats[keep[i]].additionalPrice);
+	this.selectedSeatObjs = [];
+	this.selectedSeats = '';
+	for(let seat of this.seats){
+		if(keep.includes(seat.id)){
+			this.selectedSeatObjs.push(seat);
+		}
+	}
+	for (let i = 0; i < this.selectedSeatObjs.length; i++) {
+		price += (this.basePrice + this.selectedSeatObjs[i].additionalPrice);
+		if(i == this.selectedSeatObjs.length - 1){
+			this.selectedSeats += (this.selectedSeatObjs[i].seatRow + this.selectedSeatObjs[i].seatNumber);
+		}else{
+			this.selectedSeats += (this.selectedSeatObjs[i].seatRow + this.selectedSeatObjs[i].seatNumber + ', ');
+		}
     }
 	this.calculatedPrice = price.toFixed(2) + ' €'; // Format to 2 decimal places
 	this.selectedCount = keep.length;
-	console.log(this.calculatedPrice);
 },
 },
 setup(){
@@ -248,19 +249,7 @@ async created(){
 	this.date = showing.date;
 	this.time = showing.time;
 	this.basePrice = showing.basePrice;
-
-	var res = await axios.get(APIURLService.getAPIUrl()+'/api/Showing/GetShowingById', {
-		params: {
-			showingId: this.showingId
-		}
-	});
-	// console.log(res.data);
-	if (res.data != -1) {
-		this.$store.commit('setShowingdata', res.data);
-	} else {
-		alert("Die Vorstellung existiert nicht oder ist abgelaufen.");
-		return;
-	}
+	this.is3D = showing.is3D;
 
 
 
@@ -269,8 +258,6 @@ async created(){
 		this.seats.push(seat);
 	}
 
-	// console.log(this.seats);
-    // console.log(this.seats[0].id);
 
 },
 }
@@ -279,15 +266,23 @@ async created(){
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
+.cont{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
 .seat-map-container {
-    --color-primary: #dddddd;
+    --color-primary: #000000;
     --color-disabled: #6d6d6d;
     --border-disabled: #6d6d6d;
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
 	padding: 1.5rem 2rem;
     margin: 0 auto;
-    width: 60%;
+    width: 70%;
     min-width: 800px;
+	border-radius: 8px 8px 0 0;
 }
 
 .seat-map-info {
@@ -353,8 +348,10 @@ async created(){
 }
 	
 .seat-active, .seat:has(input[type="checkbox"]:checked) {
-	--seat-background: var(--color-primary);
-	--seat-border: var(--color-primary);
+	--seat-background: #ff6b6b;
+	--seat-border: #ff6b6b;
+	/* --seat-background: var(--color-primary);
+	--seat-border: var(--color-primary); */
 	cursor: auto;
 }
 
@@ -366,7 +363,7 @@ async created(){
 
 .get-seat-button {
 	display: inline-block;
-	width: 60%;
+	width: 70%;
 	padding: 2rem;
 	margin-top: 1rem;
 
@@ -383,6 +380,113 @@ async created(){
 	clip: rect(0, 0, 0, 0);
 	white-space: nowrap;
 	border-width: 0;
+}
+
+
+.titleDiv {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.movie-info {
+	width: 90%;
+	display: flex;
+	margin-bottom: 30px;
+	background-color: #ffffff;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.movie-poster {
+	flex: 0 0 200px;
+	height: 300px;
+	background-color: #c0bcbc;
+}
+
+.movie-poster img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.movie-details {
+	flex: 1;
+	padding: 20px;
+}
+
+.movie-title {
+	font-size: 24px;
+	margin-top: 0;
+}
+
+.movie-meta {
+	display: flex;
+	gap: 15px;
+	margin-bottom: 15px;
+	font-size: 14px;
+	color: #737171;
+}
+.booking-summary {
+	background-color: #ffffff;
+	padding: 1.5rem 2rem;
+	border-radius: 0 0 8px 8px;
+    margin: 0 auto;
+    width: 70%;
+    min-width: 800px;
+	margin-bottom: 20px;
+}
+
+.booking-form {
+	background-color: #ffffff;
+	width: 90%;
+	padding: 20px;
+	border-radius: 8px;
+}
+
+.form-group {
+	margin-bottom: 15px;
+}
+
+label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+input, button {
+	padding: 10px;
+	width: 100%;
+	border-radius: 8px;
+}
+
+button {
+	background-color: #e50914;
+	color: white;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.3s;
+	border: none;
+}
+
+button:hover {
+	background-color: #f40612;
+}
+
+button:disabled {
+	background-color: #777;
+	cursor: not-allowed;
+}
+
+.hidden {
+	display: none;
+}
+
+.three-d-badge {
+  background: #ff6b6b;
+  color: white;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
 }
 </style>
 

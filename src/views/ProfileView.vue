@@ -122,7 +122,6 @@ export default {
                 }
             
             }else{
-                console.log("kracht");
                 alert("kracht");
                 this.PasswortMaching = false;
             }

@@ -18,11 +18,6 @@ import APIURLService from './services/API.service';
   export default {
     name: 'App'
   }
-  // var res = await axios.post(APIURLService.getAPIUrl());
-  // console.log(res.data);
-  // console.log(this.$store.getters.getNameVorname);
-  // console.log(this.$route.name)
-  // console.log(this.$store.state.Kundendaten.name)
   
 </script>
 

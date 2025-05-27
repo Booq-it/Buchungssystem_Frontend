@@ -61,7 +61,7 @@ export default createStore({
                 state.Showingdata.id = showingdata.id;
                 state.Showingdata.basePrice = showingdata.basePrice;
                 state.Showingdata.is3D = showingdata.is3D;
-                state.Showingdata.date = TimeConverterService.convertDate(showingdata.date);
+                state.Showingdata.date = showingdata.date;
                 state.Showingdata.time = TimeConverterService.convertTime(showingdata.date);
                 // state.Showingdata.date = showingdata.date.split('T')[0];
                 // state.Showingdata.time = showingdata.date.split('T')[1];

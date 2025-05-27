@@ -68,7 +68,6 @@
     },
     async created(){
         const kunden_id = this.$store.getters.getKundenId;
-        // console.log(kunden_id);
         if(kunden_id == null){
             this.$router.push({name: "login"});
         }
@@ -81,14 +80,10 @@
         } catch (error) {
             console.error('Error fetching bookings:', error);
         }
-        // console.log(this.bookings);
         let movieId = null;
         let showingId = null;
         for(let booking of this.bookings){
             showingId = booking.showingId;
-            console.log("ShowingId: " + showingId);
-            // console.log(booking.bookingDate);
-            // console.log(booking.id);
             try {
                 const response = await axios.get(APIURLService.getAPIUrl()+'/api/Showing/GetShowingById', {
                     params: { 
@@ -96,7 +91,6 @@
                     }
                 });
                 this.showings.push(response.data);
-                console.log(response.data);
 
             } catch (error) {
                 console.error('Error fetching movie data:', error);
@@ -104,11 +98,9 @@
         }
         for(let showing of this.showings){
             movieId = showing.movieId;
-            console.log("MovieId: " + movieId);
             try {
                 const movieResponse = await axios.get(APIURLService.getAPIUrl()+'/api/Movie/GetMovieById?id=' + movieId);
                 this.movies.push(movieResponse.data);
-                console.log("Movie: " + movieResponse.data.name);
             } catch (error) {
                 console.error('Error fetching movie data:', error);
             }

@@ -4,7 +4,6 @@ class DateConverterService {
             throw new Error('Invalid input for convertDate: ' + inputDate);
         }
         let date, month, year;
-        // console.log(inputDate);
         let dateString = inputDate.split('T')[0];
 
         if (!dateString || dateString.split('-').length !== 3) {
@@ -31,7 +30,6 @@ class DateConverterService {
         }
         let hours, minutes;
         let timeString = inputDate.split('T')[1];
-        // console.log(timeString);
 
         if (!timeString || timeString.split(':').length < 2) {
             throw new Error('Invalid time format for convertTime');
@@ -62,6 +60,14 @@ class DateConverterService {
                 .padStart(2, '0');
 
         return `${hours}:${minutes}`;
+    }
+    formatDate(dateString, long = false) {
+        const options = { weekday: long ? 'long' : 'short', day: 'numeric', month: 'short'};
+        try{
+            return new Date(dateString).toLocaleDateString('de-DE', options);
+        } catch (error) {
+            throw new Error('Invalid date format for formatDate: ' + dateString);
+        }
     }
 }
 
