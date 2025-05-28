@@ -99,18 +99,22 @@
 				<button id="bookBtn" v-if="this.$store.getters.getKundenId" v-on:click="onBuy">Tickets buchen</button>
 			</div>
 		</div>
-		<div class="booking-form" id="bookingForm" v-if="!this.$store.getters.getKundenId">
+		<form class="booking-form" id="bookingForm" v-if="!this.$store.getters.getKundenId" @submit.prevent="onBuy">
             <h3>Buchung abschließen</h3>
+			<div class="form-group">
+				<label for="firstname">Vorname</label>
+				<input type="text" id="firstname" required class="form-control" placeholder="Vorname">
+			</div>
             <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" required class="form-control" placeholder="Name">
+                <label for="surname">Name</label>
+                <input type="text" id="surname" required class="form-control" placeholder="Name">
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" required class="form-control" placeholder="Email">
             </div>
-            <button id="bookBtn">Tickets buchen</button>
-        </div>
+            <button type="submit" id="bookBtn">Tickets buchen</button>
+        </form>
 	</div>
 </template>
 
@@ -147,13 +151,26 @@ return{
 	totalSideSeats: 30,
 	totalCenterSeats: 100,
 	basePrice: null,
-	calculatedPrice: '0.00 €',
+	calculatedPrice: '0,00 €',
+	cinemaId: null,
 };
 },
 methods:{
 async onBuy(){
+	let payment = false;
+	if (!this.$store.getters.getKundenId) {
+		const firstname = document.getElementById('firstname').value.trim();
+		const surname = document.getElementById('surname').value.trim();
+		const email = document.getElementById('email').value.trim();
 
-    const kundenId = this.$store.getters.getKundenId;
+		if (!firstname || !surname || !email) {
+			alert("Bitte füllen Sie alle Felder (Vorname, Name, Email) aus.");
+			return;
+		}
+		console.log("Vorname:", firstname, "Name:", surname, "Email:", email);
+	}
+	const kundenId = this.$store.getters.getKundenId;
+
 
     const checkboxes = document.querySelectorAll('#seat-form input[type="checkbox"]:checked');
     this.selected = Array.from(checkboxes).map(cb => Number(cb.value));
@@ -168,36 +185,52 @@ async onBuy(){
         return;
     }
 
+	const numericPrice = parseFloat(this.calculatedPrice.replace(/[^0-9.,]/g, '').replace('.', ','));
+	
+	this.$store.commit('setBookingdata', {
+		showingId: this.showingId,
+		seats: this.selectedSeats,
+		seatCount: this.selectedCount,
+		price: this.calculatedPrice,
+		is3D: this.is3D,
+		date: this.date,
+		time: this.time,
+		cinemaId: this.cinemaId
+	});
 
-    try {
-		const axiosConfig = {
-			params: {
-				userId: kundenId,
-				showingId: this.showingId,
-				seatIds: [...test]
+	if(payment){
+		this.$router.push('payment');
+	}
+	else{
+		try {
+			if(this.$store.getters.getKundenId){
+				// Extract numeric value from calculatedPrice by removing currency symbol and converting to float
+				
+				var res = await axios.post(
+					APIURLService.getAPIUrl() + '/api/Booking/MakeBooking?userId=' + kundenId + '&showingId=' + this.showingId + '&price=' + numericPrice + test.map(id => '&seatIds=' + id).join('')
+				);
+
 			}
-		};
+			else{
+				var res = await axios.post(
+					APIURLService.getAPIUrl() + '/api/Booking/MakeGuestBooking?GuestFirstName=' + firstname + '&GuestLastName=' + surname + '&GuestEmail=' + email + '&showingId=' + this.showingId + '&price=' + numericPrice + test.map(id => '&seatIds=' + id).join('')
+				);
+			}
 
-
-		var res = await axios.post(
-			APIURLService.getAPIUrl() + '/api/Booking/MakeBooking?userId=' + kundenId + '&showingId=' + this.showingId + test.map(id => '&seatIds=' + id).join('')
-		);
-
-
-
-        if (res.data != -1) {
-			this.$router.push({
-				name: 'bookings',
-				params: { bookingId: res.data }
-			});
-			alert("Buchung erfolgreich! Sie werden zur Buchungsübersicht weitergeleitet.");
-        } else {
-            alert("Oh oh, es kracht!");
-        }
-    } catch (error) {
-        console.error('API call failed:', error);
-        alert("Es gab ein Problem mit der Buchung. Bitte versuchen Sie es später erneut.");
-    }
+			if (res.data != -1) {
+				this.$router.push({
+					// name: kundenId != null ? 'bookings' : 'home'
+					name: 'overview'
+				});
+				// alert("Buchung erfolgreich! Sie werden zur Buchungsübersicht weitergeleitet.");
+			} else {
+				alert("Oh oh, es kracht!");
+			}
+		} catch (error) {
+			console.error('API call failed:', error);
+			alert("Es gab ein Problem mit der Buchung. Bitte versuchen Sie es später erneut.");
+		}
+	}
 
 },
 formatDate(date) {
@@ -222,7 +255,7 @@ async calculatePrice() {
 			this.selectedSeats += (this.selectedSeatObjs[i].seatRow + this.selectedSeatObjs[i].seatNumber + ', ');
 		}
     }
-	this.calculatedPrice = price.toFixed(2) + ' €'; // Format to 2 decimal places
+	this.calculatedPrice = price.toFixed(2).replace(".",",") + ' €'; // Format to 2 decimal places
 	this.selectedCount = keep.length;
 },
 },
@@ -250,7 +283,7 @@ async created(){
 	this.time = showing.time;
 	this.basePrice = showing.basePrice;
 	this.is3D = showing.is3D;
-
+	this.cinemaId = showing.cinemaId;
 
 
 

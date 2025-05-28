@@ -4,12 +4,13 @@
         <div class="row">
             <div class="col-md-2 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="82" height="82" fill="currentColor"
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="82" height="82" fill="currentColor"
                         class="bi bi-person-bounding-box profilePic" viewBox="0 0 16 16">
                         <path
                             d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z" />
                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                    </svg>
+                    </svg> -->
+                    <img src="https://www.ts-plan.de/images/vollmer-passbild-2007-10-15-klein.png" alt="">
                     <span class="font-weight-bold">{{ this.$store.getters.getNameVorname }}</span>
                     <span class="">{{ this.$store.getters.getKundenDaten.Email }}</span>
                     <span> </span>
@@ -97,7 +98,7 @@ export default {
     },
     methods: {
         async onDatenSpeichern() {
-            await axios.post(APIURLService.getAPIUrl() + '/api/Login/ChangeUserInfo', {
+            await axios.patch(APIURLService.getAPIUrl() + '/api/Login/ChangeUserInfo', {
                 id: this.$store.getters.getKundenId,
                 lastName: this.Name,
                 firstName: this.Vorname,
@@ -164,6 +165,11 @@ export default {
 
 .border-right {
     border-right: 1px solid rgba(192, 176, 176, 0.425);
+}
+
+img {
+    border-radius: 12px;
+    margin-bottom: 10px;
 }
 
 </style>

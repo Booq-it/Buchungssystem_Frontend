@@ -7,7 +7,7 @@
             <input type="text" class="form-control" id="e-mail" placeholder="E-Mail" v-model="email">
           </div>
           <div class="mb-3">
-            <input type="password" class="form-control" id="password" placeholder="Password" v-model="passwort">
+            <input type="password" class="form-control" id="password" placeholder="Passwort" v-model="passwort">
           </div>
           <button type="submit" class="btn btn-primary mb-2 mt-2" v-on:click.prevent="onLogin">Login</button>
           <button type="submit" class="btn btn-primary mb-2 mt-2" v-on:click.prevent="onRegistrieren">Registrieren</button>

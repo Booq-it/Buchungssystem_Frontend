@@ -41,7 +41,7 @@
             <div class="row mt-4 mb-4">
               <div class="mb-3 col">
                 <label for="tagespreis" class="form-label">Gesamtpreis</label>
-                <input type="text" class="form-control" id="gesamtpreis" disabled :value="getFullPrice(bookings[index-1]) + ' €'">
+                <input type="text" class="form-control" id="gesamtpreis" disabled :value="bookings[index-1].price.toFixed(2).replace('.',',') + ' €'">
               </div>
             </div>
             <button type="submit" class="input-group-text cancelButton" v-on:click.prevent="onCancelBooking(bookings[index-1].id)" v-if="!bookings[index-1].isCancelled">Stornieren</button>

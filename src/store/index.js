@@ -34,6 +34,16 @@ export default createStore({
             Vorname: "Test",
             Email: null,
             Rolle: null,
+        },
+        Bookingdata: {
+            showingId: null,
+            seats: null,
+            seatCount: null,
+            price: null,
+            is3D: null,
+            date: null,
+            time: null,
+            cinemaId: null
         }
     },
     mutations: {
@@ -88,6 +98,25 @@ export default createStore({
                 state.Kundendaten.Vorname = null;
                 state.Kundendaten.Name = null;
                 state.Kundendaten.Rolle = null;
+            },
+            setBookingdata: (state, bookingdata)=>{
+                state.Bookingdata.seats = bookingdata.seats;
+                state.Bookingdata.seatCount = bookingdata.seatCount;
+                state.Bookingdata.price = bookingdata.price;
+                state.Bookingdata.is3D = bookingdata.is3D;
+                state.Bookingdata.date = bookingdata.date;
+                state.Bookingdata.time = TimeConverterService.convertTime(bookingdata.date);
+                state.Bookingdata.cinemaId = bookingdata.cinemaId;
+            },
+            clearBookingdata: (state)=>{
+                state.Bookingdata.seats = null;
+                state.Bookingdata.seatCount = null;
+                state.Bookingdata.price = null;
+                state.Bookingdata.is3D = null;
+                state.Bookingdata.date = null;
+                state.Bookingdata.time = null;
+                state.Bookingdata.cinemaId = null;
+                state.Bookingdata.movieId = null;
             }
         },
         getters: {
@@ -105,6 +134,9 @@ export default createStore({
                 },
                 getKundenId(state){
                     return state.Kundendaten.kundenId;
+                },
+                getBookingdata(state){
+                    return state.Bookingdata;
                 },
                 getNameVorname(state){
                     if(state.Kundendaten.Name != null){

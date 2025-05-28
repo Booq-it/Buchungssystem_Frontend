@@ -86,10 +86,11 @@ onMounted(async () => {
                 <p>Vorstellungen:</p>
                 <ShowingsList>
                     <template #showings>
-                        <div  v-for="shows in showings[movie.id-1]" :key="shows.id" class="showing-item" v-on:click="onBuy(movie, shows)">
+                        <div  v-for="(shows,idx) in showings[movie.id-1]" :key="shows.id" class="showing-item" v-on:click="onBuy(movie, shows)">
                             <p class="showing-date">{{ formatDate(shows.date) }}</p>
                             <p>{{ getTime(shows.date) }}</p>
                             <span class="three-d-badge" v-if="shows.is3D">3D</span>
+                            <!-- <div v-if="(idx-2) % 3 === 0" style="flex-basis: 200%; width: 200%; height: 0;">test</div> -->
                         </div>
 
                     </template>
