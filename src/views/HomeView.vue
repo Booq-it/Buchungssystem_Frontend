@@ -43,10 +43,10 @@ import NavBar from '../components/NavBar.vue';
       ,
       async onBuchen(){
 
-        const kunden_id = this.$store.getters.getKundenId;
+        const kundenId = this.$store.getters.getKundenId;
         const datum = this.$store.getters.getDatum;
 
-        var res = await axios.post(APIURLService.getAPIUrl()+'/api/Buchung/CreateBuchung',{ kundenid: kunden_id,
+        var res = await axios.post(APIURLService.getAPIUrl()+'/api/Buchung/CreateBuchung',{ kundenid: kundenId,
                                                                                         liegeplatzid: liegeplatzid,
                                                                                         registrierungsid: this.selected,
                                                                                         start: startdatum,

@@ -23,7 +23,7 @@
 					{{ this.description }}
 				</p>
 				<div class="movie-showtime">
-					<strong>Vorführung:</strong> {{ formatDate(this.date) }}
+					<strong>Vorführung:</strong> {{ formatDate(this.date) }} um {{ this.time }} Uhr
 				</div>
 				<span class="three-d-badge" v-if="this.is3D">3D</span>
 			</div>
@@ -95,26 +95,19 @@
 					<span v-else>Keine</span>
 				</p>
 				<!-- <p>Preis pro Ticket: <span id="ticketPrice">{{ this.basePrice.toFixed(2) }} €</span></p> -->
-				<p>Gesamtpreis: <span id="totalPrice">{{ calculatedPrice }}</span></p>
-				<button id="bookBtn" v-if="this.$store.getters.getKundenId" v-on:click="onBuy">Tickets buchen</button>
+				<p>Gesamtpreis: <span id="totalPrice">{{ calculatedPrice }}€</span></p>
+				<label class="reserve-label">
+					<input
+						class="reserve-checkbox"
+						name="reserve"
+						type="checkbox"
+						:value="Reservieren"
+						v-on:click="setReserve"/>
+					Reservieren (Zahlung später)
+				</label>
+				<button id="bookBtn" v-on:click="onBuy">Zur Kasse</button>
 			</div>
 		</div>
-		<form class="booking-form" id="bookingForm" v-if="!this.$store.getters.getKundenId" @submit.prevent="onBuy">
-            <h3>Buchung abschließen</h3>
-			<div class="form-group">
-				<label for="firstname">Vorname</label>
-				<input type="text" id="firstname" required class="form-control" placeholder="Vorname">
-			</div>
-            <div class="form-group">
-                <label for="surname">Name</label>
-                <input type="text" id="surname" required class="form-control" placeholder="Name">
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" required class="form-control" placeholder="Email">
-            </div>
-            <button type="submit" id="bookBtn">Tickets buchen</button>
-        </form>
 	</div>
 </template>
 
@@ -151,26 +144,15 @@ return{
 	totalSideSeats: 30,
 	totalCenterSeats: 100,
 	basePrice: null,
-	calculatedPrice: '0,00 €',
+	calculatedPrice: '0,00',
 	cinemaId: null,
+	payment: true,
 };
 },
 methods:{
 async onBuy(){
-	let payment = false;
-	if (!this.$store.getters.getKundenId) {
-		const firstname = document.getElementById('firstname').value.trim();
-		const surname = document.getElementById('surname').value.trim();
-		const email = document.getElementById('email').value.trim();
-
-		if (!firstname || !surname || !email) {
-			alert("Bitte füllen Sie alle Felder (Vorname, Name, Email) aus.");
-			return;
-		}
-		console.log("Vorname:", firstname, "Name:", surname, "Email:", email);
-	}
 	const kundenId = this.$store.getters.getKundenId;
-
+	let payment = this.payment;
 
     const checkboxes = document.querySelectorAll('#seat-form input[type="checkbox"]:checked');
     this.selected = Array.from(checkboxes).map(cb => Number(cb.value));
@@ -185,12 +167,13 @@ async onBuy(){
         return;
     }
 
-	const numericPrice = parseFloat(this.calculatedPrice.replace(/[^0-9.,]/g, '').replace('.', ','));
+	const numericPrice = parseFloat(this.calculatedPrice.replace(/[^0-9.,]/g, '').replace(',', '.'));
 	
 	this.$store.commit('setBookingdata', {
 		showingId: this.showingId,
 		seats: this.selectedSeats,
 		seatCount: this.selectedCount,
+		seatObjs: this.selectedSeatObjs,
 		price: this.calculatedPrice,
 		is3D: this.is3D,
 		date: this.date,
@@ -213,7 +196,7 @@ async onBuy(){
 			}
 			else{
 				var res = await axios.post(
-					APIURLService.getAPIUrl() + '/api/Booking/MakeGuestBooking?GuestFirstName=' + firstname + '&GuestLastName=' + surname + '&GuestEmail=' + email + '&showingId=' + this.showingId + '&price=' + numericPrice + test.map(id => '&seatIds=' + id).join('')
+					APIURLService.getAPIUrl() + '/api/Booking/MakeGuestBooking?GuestFirstName=' + firstname + '&GuestLastName=' + surname + '&GuestEmail=' + email + '&showingId=' + this.showingId + '&price=' + this + test.map(id => '&seatIds=' + id).join('')
 				);
 			}
 
@@ -233,8 +216,20 @@ async onBuy(){
 	}
 
 },
+setReserve() {
+	this.payment = !this.payment;
+	// Update button text to reflect payment mode
+	if (this.payment) {
+		document.getElementById('bookBtn').textContent = 'Zur Kasse';
+	} else {
+		document.getElementById('bookBtn').textContent = 'Tickets reservieren';
+	}
+},
 formatDate(date) {
 	return TimeConverterService.formatDate(new Date(date), true);
+},
+getTime(date) {
+	return TimeConverterService.convertTime(new Date(date));
 },
 async calculatePrice() {
 	let price = 0;
@@ -255,7 +250,7 @@ async calculatePrice() {
 			this.selectedSeats += (this.selectedSeatObjs[i].seatRow + this.selectedSeatObjs[i].seatNumber + ', ');
 		}
     }
-	this.calculatedPrice = price.toFixed(2).replace(".",",") + ' €'; // Format to 2 decimal places
+	this.calculatedPrice = price.toFixed(2).replace(".",","); // Format to 2 decimal places
 	this.selectedCount = keep.length;
 },
 },
@@ -298,6 +293,15 @@ async created(){
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.reserve-label {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.reserve-checkbox {
+	width: 1.2rem;
+}
 
 .cont{
 	display: flex;
@@ -422,7 +426,8 @@ async created(){
 }
 
 .movie-info {
-	width: 90%;
+    width: 70%;
+    min-width: 800px;
 	display: flex;
 	margin-bottom: 30px;
 	background-color: #ffffff;

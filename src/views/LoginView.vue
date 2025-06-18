@@ -31,7 +31,7 @@
     },
     data() {
     return{
-      kunden_id: null,
+      kundenId: null,
       email: null,
       passwort: null
     };
@@ -46,7 +46,7 @@
 			      if(response.data != -1){
               this.$store.commit('setKundenDaten', response.data);
               const rolle = this.$store.getters.getRolle;
-              const kunden_id = this.$store.getters.getKundenId;
+              const kundenId = this.$store.getters.getKundenId;
               this.$router.push('/')
             }else{
               alert("Email oder Passwort falsch");

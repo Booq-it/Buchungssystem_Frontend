@@ -67,14 +67,14 @@
       
     },
     async created(){
-        const kunden_id = this.$store.getters.getKundenId;
-        if(kunden_id == null){
+        const kundenId = this.$store.getters.getKundenId;
+        if(kundenId == null){
             this.$router.push({name: "login"});
         }
         try {
             this.bookings = await (await axios.get(APIURLService.getAPIUrl()+'/api/Booking/GetBookingsByUserId', {
                 params: { 
-                userId: kunden_id 
+                userId: kundenId 
                 }
             })).data;
         } catch (error) {

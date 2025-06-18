@@ -39,6 +39,7 @@ export default createStore({
             showingId: null,
             seats: null,
             seatCount: null,
+            seatObjs: null,
             price: null,
             is3D: null,
             date: null,
@@ -100,8 +101,10 @@ export default createStore({
                 state.Kundendaten.Rolle = null;
             },
             setBookingdata: (state, bookingdata)=>{
+                state.Bookingdata.showingId = bookingdata.showingId;
                 state.Bookingdata.seats = bookingdata.seats;
                 state.Bookingdata.seatCount = bookingdata.seatCount;
+                state.Bookingdata.seatObjs = bookingdata.seatObjs;
                 state.Bookingdata.price = bookingdata.price;
                 state.Bookingdata.is3D = bookingdata.is3D;
                 state.Bookingdata.date = bookingdata.date;
@@ -109,8 +112,10 @@ export default createStore({
                 state.Bookingdata.cinemaId = bookingdata.cinemaId;
             },
             clearBookingdata: (state)=>{
+                state.Bookingdata.showingId = null;
                 state.Bookingdata.seats = null;
                 state.Bookingdata.seatCount = null;
+                state.Bookingdata.seatObjs = null;
                 state.Bookingdata.price = null;
                 state.Bookingdata.is3D = null;
                 state.Bookingdata.date = null;
@@ -137,6 +142,15 @@ export default createStore({
                 },
                 getBookingdata(state){
                     return state.Bookingdata;
+                },
+                getName(state){
+                    return state.Kundendaten.Name;
+                },
+                getVorname(state){
+                    return state.Kundendaten.Vorname;
+                },
+                getEmail(state){
+                    return state.Kundendaten.Email;
                 },
                 getNameVorname(state){
                     if(state.Kundendaten.Name != null){

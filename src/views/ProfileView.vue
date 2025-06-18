@@ -49,11 +49,11 @@
                     <div class="d-flex justify-content-between align-items-center experience"><span>Passwort
                             ändern</span></div><br>
                     <div class="col-md-12"><label class="labels">Altes Passwort</label><input type="password"
-                            class="form-control" placeholder="Passwort" v-model=this.Passwort1></div> <br>
+                            class="form-control" placeholder="Passwort" v-model=this.password1></div> <br>
                     <div class="col-md-12"><label class="labels">Neues Passwort</label><input type="password"
-                            class="form-control" placeholder="Passwort" v-model=this.Passwort2></div> <br>
+                            class="form-control" placeholder="Passwort" v-model=this.password2></div> <br>
                     <div class="col-md-12"><label class="labels">Passwort bestätigen</label><input type="password"
-                            class="form-control" placeholder="Passwort bestätigen" v-model=this.Passwort3></div>
+                            class="form-control" placeholder="Passwort bestätigen" v-model=this.password3></div>
                     <div class="mt-3 text-center"><button class="input-group-text saveButton"
                             type="button" v-on:click.prevent="onPasswortSpeichern">Ändern</button></div>
                 </div>
@@ -79,15 +79,15 @@ export default {
             Name: null,
             Vorname: null,
             Email: null,
-            Passwort1: null,
-            Passwort2: null,
-            Passwort3: null,
-            PasswortMaching: true
+            password1: null,
+            password2: null,
+            password3: null,
+            passwordMatching: true
         }
     },
     created() {
-        const kunden_id = this.$store.getters.getRolle;
-        if (kunden_id == null) {
+        const kundenId = this.$store.getters.getRolle;
+        if (kundenId == null) {
             this.$router.push({ name: "login" });
         }
 
@@ -108,23 +108,26 @@ export default {
 
         },
         async onPasswortSpeichern(){
-            if(this.Passwort2 == this.Passwort3){
-                var res = await axios.post(APIURLService.getAPIUrl() + '/api/User/ChangePassword', {
+            if(this.password2 == this.password3){
+                var res = await axios.patch(APIURLService.getAPIUrl() + '/api/Login/ChangePassword', {
                 id: this.$store.getters.getKundenId,
-                oldPassword: this.Passwort1,
-                newPassword: this.Passwort2
+                oldPassword: this.password1,
+                newPassword: this.password2
                 })
                 if(res.data == -1){
                     alert("Passwort konnte nicht geändert werden");
-                    this.PasswortMaching = false;
+                    this.passwordMatching = false;
                 }else{
                     alert("Passwort erfolgreich geändert");
-                    this.PasswortMaching = true;
+                    this.passwordMatching = true;
+                    this.$store.commit('clearKundenDaten');
+                    // this redirects to the view with the name login
+                    this.$router.push({ name: "login" });
                 }
             
             }else{
                 alert("kracht");
-                this.PasswortMaching = false;
+                this.passwordMatching = false;
             }
         },
         updateStoreDaten(){
@@ -144,7 +147,7 @@ export default {
 
 <style scoped>
 .container {
-    max-width: 1200px;
+    max-width: 1500px;
     padding: 0 1rem;
     position: relative;
     background: white;
@@ -170,6 +173,7 @@ export default {
 img {
     border-radius: 12px;
     margin-bottom: 10px;
+    width: 150px;
 }
 
 </style>

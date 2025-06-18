@@ -63,7 +63,7 @@
         
         <div class="pricing">
             <div>Gesamtpreis:</div>
-            <div class="total" id="price">{{ this.price }}</div>
+            <div class="total" id="price">{{ this.price.replace(".",",") }} €</div>
         </div>
     </div>
 </template>

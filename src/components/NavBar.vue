@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">Buchungssystem</a>
+        <a class="navbar-brand" href="/"><img src="../../img/booqit.png" alt="logo" class="logo"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -16,6 +16,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/register" v-if="this.$store.getters.getRolle == null">Registrierung</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" v-if="!this.hide">Scrum ist kacke</a>
             </li>
           </ul>
           <li class="nav-link" v-if="this.$store.getters.getRolle != null">
@@ -38,6 +41,9 @@
                   <a class="dropdown-item" href="/profile">Profil Bearbeiten</a>
                 </li>
                 <li>
+                  <a class="dropdown-item" href="#" v-on:click.prevent="this.hide = false">Nicht drücken!</a>
+                </li>
+                <li>
                   <a class="dropdown-item" href="#" v-on:click.prevent="logOut()">Ausloggen</a>
                 </li>
               </ul>
@@ -50,6 +56,11 @@
   
   <script>
   export default {
+    data() {
+      return {
+        hide: true
+      };
+    },
     name: "NavBar",
     methods: {
       logOut() {
@@ -70,6 +81,7 @@
     top: 0;
     z-index: 1000;
       background-color: #1a1a1a;
+      /* background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet, red); */
       color: white;
       padding: .3rem 2rem;
       display: flex;
@@ -80,13 +92,14 @@
 
   .navbar-brand {
       color: white;
-      font-size: 1.8rem;
+      font-size: 3rem;
       font-weight: bold;
   }
 
   .navbar-links {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.8rem;
+      font-size: 1.2rem;
   }
 
   .navbar-links a {
@@ -96,7 +109,7 @@
   }
 
   .navbar-links a:hover {
-      color: #ff6b6b;
+      color: #0a64be;
   }
   
   .bg-custom,
@@ -124,5 +137,10 @@
   text-decoration: none;
   background-color: #adb0b4;
 } */
+
+.logo {
+    height: 50px;
+    margin-right: 10px;
+  }
   </style>
   
