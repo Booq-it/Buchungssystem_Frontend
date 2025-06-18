@@ -1,5 +1,5 @@
+import DateConverterService from '../TimeConverter.service.js';
 import { describe, it, expect } from 'vitest';
-import DateConverterService from '../TimeConverter.service';
 
 describe('DateConverterService', () => {
     describe('convertDate', () => {

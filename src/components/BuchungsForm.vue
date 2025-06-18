@@ -114,7 +114,7 @@
 <script>
 import axios from 'axios'
 import APIURLService from '../services/API.service';
-import TimeConverterService from '@/services/TimeConverter.service';
+import TimeConverterService from '../services/TimeConverter.service';
 
 
 export default {
@@ -227,9 +227,6 @@ setReserve() {
 },
 formatDate(date) {
 	return TimeConverterService.formatDate(new Date(date), true);
-},
-getTime(date) {
-	return TimeConverterService.convertTime(new Date(date));
 },
 async calculatePrice() {
 	let price = 0;

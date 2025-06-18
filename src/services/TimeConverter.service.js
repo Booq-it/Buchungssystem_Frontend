@@ -63,8 +63,15 @@ class DateConverterService {
     }
     formatDate(dateString, long = false) {
         const options = { weekday: long ? 'long' : 'short', day: 'numeric', month: 'short'};
-        try{
-            return new Date(dateString).toLocaleDateString('de-DE', options);
+        const date = new Date(dateString);
+        
+        // Check if the date is valid
+        if (isNaN(date.getTime())) {
+            throw new Error('Invalid date format for formatDate: ' + dateString);
+        }
+        
+        try {
+            return date.toLocaleDateString('de-DE', options);
         } catch (error) {
             throw new Error('Invalid date format for formatDate: ' + dateString);
         }

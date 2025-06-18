@@ -1,4 +1,6 @@
 import APIService from '../API.service';
+import { describe, it, expect } from 'vitest';
+
 
 describe('APIService', () => {
   // Anweisungsüberdeckung

@@ -3,7 +3,7 @@ import VuexPersistence from 'vuex-persist';
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
 });
-import TimeConverterService from '@/services/TimeConverter.service';
+import TimeConverterService from '../services/TimeConverter.service';
 
 
 export default createStore({
@@ -156,7 +156,9 @@ export default createStore({
                     if(state.Kundendaten.Name != null){
                         return state.Kundendaten.Vorname + ' ' +state.Kundendaten.Name;
                     }
-                    
+                    else{
+                        return undefined;
+                    }
                 }
             },
     plugins: [vuexLocal.plugin],

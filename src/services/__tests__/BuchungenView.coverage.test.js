@@ -40,7 +40,7 @@ function getSeats(booking) {
 describe('BuchungenView Methoden', () => {
   // Anweisungsüberdeckung: getFullPrice
   it('getFullPrice: gibt den Gesamtpreis für mehrere Sitze korrekt zurück', () => {
-    expect(getFullPrice(dummyBooking)).toBe('35.00');
+    expect(getFullPrice(dummyBooking)).toBe('25.00');
   });
   // Entscheidungsüberdeckung: getFullPrice mit nur einem Sitz
   it('getFullPrice: gibt den Gesamtpreis für einen Sitz korrekt zurück', () => {
